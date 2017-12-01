@@ -1,4 +1,4 @@
-;;; goenv --- provide funcs and mode for creating temporary workspace environment
+;;; goenv.el --- provide funcs and mode for creating temporary workspace environment
 
 ;; Copyright (C) 2017-2018 Mephis Pheies <mephistommm@gmail.com>
 
@@ -102,4 +102,4 @@ Will show the current temporary workspace in the mode line."
                                       mode-line-misc-info)))))
 
 (provide 'goenv)
-;;; goenv ends here
+;;; goenv.el ends here
