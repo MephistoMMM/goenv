@@ -41,6 +41,7 @@
 Do not set this variable directly; use `goenv-activate' or
 `goenv-workon'.")
 
+;; TODO show temporary workspace name.
 (defvar goenv-temporary-env-name nil
   "The name of the current temporary environment.
 
@@ -60,7 +61,6 @@ This is usually the base name of `goenv-temporary-env'.")
   (setq directory (expand-file-name directory)
         goenv-temporary-env-name (file-name-nondirectory directory))
   (goenv-deactivate)
-  ;; (message process-environment)
   (setq goenv-old-process-environment process-environment)
   (let ((path-items (split-string (getenv "GOPATH") ":")))
     (setq process-environment (append
@@ -71,10 +71,9 @@ This is usually the base name of `goenv-temporary-env'.")
                                                            (list directory)
                                                            (cdr path-items))
                                                    ":")))
-                               process-environment)
-          goenv-temporary-env t)
+                               process-environment))
     )
-  (message (getenv "GOPATH"))
+  (setq goenv-temporary-env t)
   )
 
 ;;;###autoload
@@ -85,21 +84,7 @@ This is usually the base name of `goenv-temporary-env'.")
     (setq process-environment goenv-old-process-environment
           goenv-old-process-environment nil))
   (setq goenv-temporary-env nil)
-  (message (getenv "GOPATH"))
   )
-
-;;;###autoload
-(define-minor-mode goenv-mode
-  "Global minor mode for goenv.
-
-Will show the current temporary workspace in the mode line."
-  :global t
-  (cond
-   (goenv-mode
-    (add-to-list 'mode-line-misc-info '(goenv-mode goenv-mode-line-indicator)))
-   ((not goenv-mode)
-    (setq mode-line-misc-info (delete '(goenv-mode goenv-mode-line-indicator)
-                                      mode-line-misc-info)))))
 
 (provide 'goenv)
 ;;; goenv.el ends here
