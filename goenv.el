@@ -35,6 +35,9 @@
   :prefix "goenv-"
   :group 'languages)
 
+(defvar goenv-default-gopath "~/Workspace/go/lib:~/Workspace/go"
+  "The default gopath")
+
 (defvar goenv-temporary-env nil
   "The current go template workspace environment.
 
@@ -61,6 +64,11 @@ This is usually the base name of `goenv-temporary-env'.")
   (setq directory (expand-file-name directory)
         goenv-temporary-env-name (file-name-nondirectory directory))
   (goenv-deactivate)
+
+  (if (getenv "GOPATH")
+      nil
+      (setenv "GOPATH" goenv-default-gopath))
+
   (setq goenv-old-process-environment process-environment)
   (let ((path-items (split-string (getenv "GOPATH") ":")))
     (setq process-environment (append
